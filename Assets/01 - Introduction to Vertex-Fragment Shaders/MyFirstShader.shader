@@ -2,17 +2,23 @@
 {
     Properties
     {
-        
+        _MainColor("Main Color", Color) = (0, 0, 0, 1)
+        _SecondaryColor("Secondary Color", Color) = (1, 1, 1, 1)
     }
 
     SubShader
     {
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
+        
             CGPROGRAM
 
             #pragma vertex VertexFunction
             #pragma fragment FragmentFunction
+
+            float4 _MainColor;
+            float4 _SecondaryColor;
 
             struct VertexData
             {
@@ -40,10 +46,10 @@
                 float4 finalColor;
                 if(input.uv.x < 0.5 && input.uv.y < 0.5)
                 {
-                    finalColor = float4(0, 0, 0, 1);
+                    finalColor = _MainColor;
                 }else
                 {
-                    finalColor = float4(1, 1, 1, 1);
+                    finalColor = _SecondaryColor;
                 }
                 
                 return finalColor;
